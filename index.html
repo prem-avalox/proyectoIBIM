@@ -6,7 +6,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link
-            href="https://fonts.googleapis.com/css2?family=Michroma&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap"
             rel="stylesheet">
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet"
@@ -15,8 +15,11 @@
     </head>
     <body class="general">
         <div class="header">
+            <div class="filter-bar">
+                <i class="far fa-bars"></i>
+            </div>
             <div class="logo">
-                <img src="img/h&m_header_logo.webp" alt="h&m logo">
+                <h1>CLOTHING STORE</h1>
             </div>
             <div class="button-container">
                 <div id="search">
@@ -25,14 +28,8 @@
                 <div id="user-info">
                     <i class="far fa-user"></i>
                 </div>
-                <div id="favorites">
-                    <i class="far fa-heart"></i>
-                </div>
                 <div id="shopping-bag">
                     <i class="far fa-shopping-bag"></i>
-                </div>
-                <div id="filter-bar">
-                    <i class="fas fa-bars"></i>
                 </div>
             </div>
 
@@ -51,23 +48,25 @@
             </ul>
         </nav>
         <nav class="category-nav-bar">
-            <ul class="sub-nav-bar-list">
+            <ul class="cajas-filtro-lista">
                 <li>
                     <div>
-                        VER TODO
-
+                        PRECIO <i class="fas fa-chevron-down"></i>
                     </div>
                 </li>
                 <li>
                     <div>
-                        CASUALES
-
+                        TAMAÑO <i class="fas fa-chevron-down"></i>
                     </div>
                 </li>
                 <li>
                     <div>
-                        FORMALES
-
+                        CORTE <i class="fas fa-chevron-down"></i>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        ORDENAR <i class="fas fa-chevron-down"></i>
                     </div>
                 </li>
             </ul>
@@ -75,38 +74,47 @@
         <section class="product-section">
             <div class="tarjeta-producto">
                 <div class="imagen-producto">
-                    <img src="/img/camisa-negra-regular-easy.webp" alt="Camisa Negra Manga Larga Regular Fit Easy Iron">
+                    <img src="/img/camisa-negra-regular-easy.webp"
+                        alt="Camisa Negra Manga Larga Regular Fit Easy Iron">
                 </div>
                 <div class="info-producto">
-                    <h3 class="nombre-producto">Camisa Negra Manga Larga Regular Fit Easy Iron</h3>
+                    <h3 class="nombre-producto">Camisa Negra Manga Larga Regular
+                        Fit Easy Iron</h3>
                     <p class="precio-producto">$29.99</p>
                 </div>
             </div>
-             <div class="tarjeta-producto">
+            <div class="tarjeta-producto">
                 <div class="imagen-producto">
-                    <img src="/img/camisa-negra-slim-easy.webp" alt="Camisa Negra Manga Larga Slim Fit Easy Iron">
+                    <img src="/img/camisa-negra-slim-easy.webp"
+                        alt="Camisa Negra Manga Larga Slim Fit Easy Iron">
                 </div>
                 <div class="info-producto">
-                    <h3 class="nombre-producto">Camisa Negra Manga Larga Slim Fit Easy Iron</h3>
+                    <h3 class="nombre-producto">Camisa Negra Manga Larga Slim
+                        Fit Easy Iron</h3>
                     <p class="precio-producto">$19.99</p>
                 </div>
             </div>
-             <div class="tarjeta-producto">
+            <div class="tarjeta-producto">
                 <div class="imagen-producto">
-                    <img src="/img/camisa-celeste-slim-easy.webp" alt="Camisa Celeste Manga Larga Slim Fit Easy Iron">
+                    <img src="/img/camisa-celeste-slim-easy.webp"
+                        alt="Camisa Celeste Manga Larga Slim Fit Easy Iron">
                 </div>
                 <div class="info-producto">
-                    <h3 class="nombre-producto">Camisa Celeste Manga Larga Slim Fit Easy Iron</h3>
+                    <h3 class="nombre-producto">Camisa Celeste Manga Larga Slim
+                        Fit Easy Iron</h3>
                     <p class="precio-producto">$19.99</p>
                 </div>
             </div>
-             <div class="tarjeta-producto">
+            <div class="tarjeta-producto">
                 <div class="imagen-producto">
-                    <img src="img/camisa-slim-algodon.webp" alt="Camisa Algodón Manga Larga Regular Fit">
+                    <img src="img/camisa-slim-algodon.webp"
+                        alt="Camisa Algodón Manga Larga Regular Fit">
                 </div>
                 <div class="info-producto">
-                    <h3 class="nombre-producto">Camisa Algodón Manga Larga Regular Fit</h3>
-                    <p class="precio-producto">$34.99</p>
+                    
+                        <h3 class="nombre-producto">Camisa Algodón Manga Larga
+                            Regular Fit</h3>
+                        <p class="precio-producto">$34.99</p>
                 </div>
             </div>
 

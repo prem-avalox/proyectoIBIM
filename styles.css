@@ -1,40 +1,127 @@
 :root {
-    --soft-color: #999999;
+    --texto-inactivo: #999999;
+    --color-primario: #124a7e;
+    --color-acento: #e0e0e0;
+    --color-precio: #575757;
+    --color-fondo: #ffffff;
+    --color-boton-animacion: #041A2F;
+    --borde-inferior: 1px solid var(--color-acento);
+    --borde-hover: 1px solid black;
+
+    --fuente-tarjeta: 12px;
     --fuente-pequena: 14px;
     --fuente-mediana: 16px;
     --fuente-grande: 20px;
-    --espacio: 20px;
-    --transition: 0.1s;
+    --fuente-extra-grande: 24px;
+    --fuente-texto: "Playfair Display", serif;
+    --fuente-precio: "Roboto Condensed", sans-serif;
+    
+    --espacio: 50px;
+    --espacio-pequeno: 10px;
+    --padding-estandar: 20px 50px;
+    --padding-caja: 5px 15px;
+    --transition: 0.5s;
+    --padding-icono: 0px 0px 0px 10px;
+
+    /* Pesos de fuente */
+    --thin: 100;
+    --extra-light: 200;
+    --light: 300;
+    --regular: 400;
+    --medium: 500;
+    --semi-bold: 600;
+    --bold: 700;
+    --extra-bold: 800;
+    --black: 900;
 }
+
+/*
+* {
+    border: 1px solid red;
+}
+*/
+
+/* Utilidades generales */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.no-list {
+    list-style: none;
+}
+
+/* Estilos de texto */
+.texto-principal {
+    font-family: var(--fuente-texto);
+    font-size: var(--fuente-mediana);
+    font-weight: var(--regular);
+}
+
+.texto-precio {
+    font-family: var(--fuente-precio);
+    color: var(--color-precio);
+    font-weight: var(--light);
+}
+
+/* Cajas interactivas */
+.caja-interactiva {
+    border: 1px solid var(--color-acento);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.caja-interactiva:hover {
+    border: var(--borde-hover);
+}
+
 .general {
     margin: 0;
     padding: 0;
- 
-}   
+}
+
 
 .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 00px 20px;
+    padding: 10px 20px;
+    border-bottom: var(--borde-inferior);
 }
 
-.logo {
-    width: 40px;
-    height: 40px;
+.filter-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 }
 
-.logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+.logo {
+    margin-left: 130px;
+}
+
+.logo h1 {
+    font-size: var(--fuente-extra-grande);
+    font-family: var(--fuente-texto);
+    font-weight: var(--bold);
+    cursor: pointer;
+    color: var(--color-primario);
 }
 
 .button-container {
     display: flex;
     align-items: center;
-    padding: 0%;
 }
 
 .button-container>div {
@@ -47,91 +134,206 @@
 }
 
 .nav-bar {
-
+    display: flex;
     align-items: center;
-    padding:0px 70px ;
-
+    width: 100%;
 }
 
 .nav-bar-list {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    padding: var(--padding-estandar);
+    margin: 0;
 }
 
 .nav-bar-list li {
     list-style: none;
-    margin: 0 30px;
     font-size: var(--fuente-pequena);
-    font-weight: 500;
-    cursor: pointer;
-    font-family: 'Outfit', sans-serif;
-    color: var(--soft-color);
+    font-weight: var(--medium);
+    font-family: var(--fuente-texto);
+    color: var(--texto-inactivo);
     cursor: pointer;
 }
+
 .nav-bar-list li:hover {
-    color: black;
+    color: var(--color-primario);
     transition: var(--transition);
 }
 
 .category-nav-bar {
-
     padding: 5px;
 }
 
-.sub-nav-bar-list {
+.cajas-filtro-lista,
+.cajas-talla-lista {
     display: flex;
     align-items: center;
-    gap: var(--espacio);
-}
-.sub-nav-bar-list li {
     list-style: none;
-    margin: 0 10px;
- 
 }
-.sub-nav-bar-list li div {
 
-    font-size: var(--fuente-pequena);
-    font-family: "Michroma", sans-serif;
-    font-weight: bold;
+.cajas-filtro-lista {
+    gap: var(--espacio);
+    padding: 0 50px 20px 40px;
+}
+
+.cajas-filtro-lista li,
+.cajas-talla-lista li {
+    list-style: none;
+}
+
+.cajas-filtro-lista li div {
+    font-size: var(--fuente-tarjeta);
+    font-family: var(--fuente-texto);
+    font-weight: var(--thin);
     cursor: pointer;
-    padding: 5px 15px;
-    border: 1px solid black;
- 
-
+    padding: var(--padding-caja);
+    border: 1px solid var(--color-acento);
 }
-.sub-nav-bar-list li div:hover {
-    background-color: black;
-    color: white;
+
+.cajas-filtro-lista li div:hover,
+.cajas-talla-lista li div:hover {
+    border: var(--borde-hover);
     transition: var(--transition);
 }
-.product-section{
-    display: flex;
 
+.fa-chevron-down,
+.fa-ruler {
+    padding: var(--padding-icono);
 }
+
+.product-section {
+    display: flex;
+    gap: var(--espacio);
+    padding: 0 45px;
+}
+
 .tarjeta-producto {
     width: auto;
-
-
 }
-.tarjeta-producto img{
+
+.tarjeta-producto img {
     width: 100%;
     height: auto;
     object-fit: contain;
     cursor: pointer;
+}
 
+.info-producto {
+    padding: 0 10px;
 }
-.info-producto{
-    padding: 0px 10px ;
+
+.tarjeta-producto p {
+    font-family: var(--fuente-precio);
+    font-size: var(--fuente-tarjeta);
+    font-weight: var(--light);
+    color: var(--color-precio);
 }
-.tarjeta-producto h3{
-    font-family: 'Outfit', sans-serif;
+
+.tarjeta-producto h3 {
+    font-family: var(--fuente-texto);
+    font-size: var(--fuente-tarjeta);
+    font-weight: var(--regular);
+}
+
+/* Estilos para la sección productos */
+
+.product-detail-section {
+    display: flex;
+    gap: var(--espacio);
+    padding: 20px 45px 50px 45px;
+}
+
+.detail-section h2 {
+    font-family: var(--fuente-texto);
+    font-size: var(--fuente-extra-grande);
+    font-weight: var(--bold);
+}
+
+.precio-detalle-producto {
+    font-family: var(--fuente-precio);
+    font-size: var(--fuente-grande);
+    font-weight: var(--light);
+    color: var(--color-precio);
+}
+
+.detalle-producto {
+    width: 525px;
+    border-bottom: var(--borde-inferior);
+}
+
+.seleccion-talla-producto {
+    padding: 10px 0 30px 0;
+}
+
+.texto-producto-detalle,
+.guia-tallas {
+    font-family: var(--fuente-texto);
+    font-size: var(--fuente-mediana);
+    font-weight: var(--regular);
+}
+
+.guia-tallas {
+    cursor: pointer;
+}
+
+.cajas-talla-lista {
+    gap: var(--espacio-pequeno);
+    padding: 20px 0;
+}
+
+.cajas-talla-lista li div {
+    font-size: var(--fuente-tarjeta);
+    font-family: var(--fuente-texto);
+    font-weight: var(--thin);
+    cursor: pointer;
+    padding: 15px;
+    border: 1px solid var(--color-acento);
+}
+
+.agregar-bolsa {
+    background-color: var(--color-primario);
+    color: white;
+    font-family: var(--fuente-texto);
+    font-weight: var(--semi-bold);
+    font-size: var(--fuente-mediana);
+    padding: 15px 50px;
+    border: none;
+    cursor: pointer;
+    transition: background-color var(--transition);
+    text-align: center;
+}
+
+.agregar-bolsa:hover {
+    background-color: var(--color-boton-animacion);
+}
+
+.descripcion {
+    font-family: var(--fuente-precio);
+    color: var(--color-precio);
     font-size: var(--fuente-pequena);
-    font-weight: 300;
-    
+    font-weight: var(--light);
+    padding: 20px 0;
+    border-bottom: var(--borde-inferior);
+    margin-bottom: 20px;
 }
-.tarjeta-producto p{
-    font-family: 'Outfit', sans-serif;
-    font-size: var(--fuente-pequena);
-    font-weight: bold;
+
+.cajas-informacion {
+    padding: 10px 20px 20px 20px;
+    background-color: var(--color-acento);
+    font-family: var(--fuente-precio);
+    font-size: var(--fuente-tarjeta);
+    font-weight: var(--light);
+    margin-bottom: 20px;
+}
+
+.payment-icons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.payment-icons i {
+    font-size: 24px;
 }
