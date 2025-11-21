@@ -11,7 +11,7 @@
 2. Abre phpMyAdmin en tu navegador: `http://localhost/phpmyadmin`
 3. Importa el archivo de base de datos:
    - Haz clic en "Importar"
-   - Selecciona el archivo `database/productos.sql`
+   - Selecciona el archivo `database/clothing_store.sql`
    - Haz clic en "Continuar"
 
 ### 2. Configurar el proyecto

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Clothing Store - Versión Estática Demo</title>
+</head>
+<body class="general">
+    <div class="header">
+        <div class="filter-bar">
+            <i class="far fa-bars"></i>
+        </div>
+        <div class="logo">
+            <h1>CLOTHING STORE</h1>
+        </div>
+        <div class="button-container">
+            <div id="search" class="search-container">
+                <i class="far fa-search"></i>
+                <div class="search-form">
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <input type="text" placeholder="Buscar producto..." 
+                               style="padding: 10px 15px; border: 1px solid var(--color-acento); border-radius: 0; width: 250px; font-family: var(--fuente-texto); font-size: 14px; color: var(--color-primario); outline: none; box-sizing: border-box;">
+                        <button type="button" style="padding: 10px 20px; background-color: var(--color-primario); color: white; border: none; border-radius: 0; cursor: pointer; font-family: var(--fuente-texto); font-size: 14px; font-weight: 600; letter-spacing: 1px; transition: background-color 0.3s; width: 100%; box-sizing: border-box;">
+                            BUSCAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div id="user-info">
+                <a href="login.html"><i class="far fa-user"></i></a>
+            </div>
+            <div id="shopping-bag">
+                <i class="far fa-shopping-bag"></i>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sidebar de categorías -->
+    <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header" style="margin-top: 70px;">
+            <h2>CATEGORÍAS</h2>
+            <i class="fas fa-times close-btn" onclick="toggleSidebar()"></i>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#" class="active-category">Ver Todo</a></li>
+            <li><a href="#camisas">Camisas</a></li>
+            <li><a href="#pantalones">Pantalones</a></li>
+            <li><a href="#calzado">Calzado</a></li>
+            <li><a href="#accesorios">Accesorios</a></li>
+        </ul>
+    </aside>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Cart Sidebar -->
+    <div id="cart-sidebar" class="cart-sidebar" style="position: fixed; top: 0; right: -450px; left: auto !important; width: 450px; height: 100vh; background-color: white; box-shadow: -2px 0 10px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 1001; display: flex; flex-direction: column;">
+        <div class="sidebar-header" style="margin-top: 70px;">
+            <h2>MI BOLSA</h2>
+            <i class="fas fa-times close-btn" onclick="toggleCart()"></i>
+        </div>
+        
+        <div id="cart-items" class="cart-items" style="flex: 1; overflow-y: auto; padding: 20px;">
+            <!-- Los productos se agregarán aquí dinámicamente -->
+        </div>
+        
+        <div class="cart-footer" style="border-top: 2px solid #e0e0e0; padding: 20px; background-color: #f9f9f9;">
+            <div class="cart-total" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700;">
+                <span>Total:</span>
+                <span id="cart-total-amount">$0.00</span>
+            </div>
+            <div class="cart-checkout-btn" onclick="proceedToCheckout()" style="width: 100%; padding: 15px 20px; cursor: pointer; font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; transition: background-color 0.3s; margin-bottom: 10px; text-align: center; background-color: #124a7e; color: white; border: none; box-sizing: border-box;">
+                Proceder al Pago
+            </div>
+            <div class="cart-clear-btn" onclick="clearCart()" style="width: 100%; padding: 15px 20px; cursor: pointer; font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; transition: background-color 0.3s; margin-bottom: 10px; text-align: center; background-color: white; color: #575757; border: 1px solid #e0e0e0; box-sizing: border-box;">
+                Vaciar Bolsa
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay para el carrito -->
+    <div id="cart-overlay" class="overlay" onclick="toggleCart()"></div>
+
+    <!-- Barra de categorías y filtros -->
+    <nav class="category-nav-bar">
+        <ul class="cajas-filtro-lista">
+            <li>
+                <div onclick="toggleDropdown('talla-dropdown')">
+                    TAMAÑO <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="talla-dropdown" class="filter-dropdown" style="display: none;">
+                    <label><input type="radio" name="talla" value="" checked> Todas</label>
+                    <label><input type="radio" name="talla" value="XS"> XS</label>
+                    <label><input type="radio" name="talla" value="S"> S</label>
+                    <label><input type="radio" name="talla" value="M"> M</label>
+                    <label><input type="radio" name="talla" value="L"> L</label>
+                    <label><input type="radio" name="talla" value="XL"> XL</label>
+                </div>
+            </li>
+            <li>
+                <div onclick="toggleDropdown('color-dropdown')">
+                    COLOR <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="color-dropdown" class="filter-dropdown" style="display: none;">
+                    <label><input type="radio" name="color" value="" checked> Todos</label>
+                    <label><input type="radio" name="color" value="Negro"> Negro</label>
+                    <label><input type="radio" name="color" value="Celeste"> Celeste</label>
+                    <label><input type="radio" name="color" value="Blanco"> Blanco</label>
+                    <label><input type="radio" name="color" value="Gris"> Gris</label>
+                    <label><input type="radio" name="color" value="Crudo"> Crudo</label>
+                    <label><input type="radio" name="color" value="Marrón"> Marrón</label>
+                </div>
+            </li>
+            <li>
+                <div onclick="toggleDropdown('corte-dropdown')">
+                    CORTE <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="corte-dropdown" class="filter-dropdown" style="display: none;">
+                    <label><input type="radio" name="corte" value="" checked> Todos</label>
+                    <label><input type="radio" name="corte" value="Regular Fit"> Regular Fit</label>
+                    <label><input type="radio" name="corte" value="Slim Fit"> Slim Fit</label>
+                    <label><input type="radio" name="corte" value="Loose Fit"> Loose Fit</label>
+                    <label><input type="radio" name="corte" value="Relaxed Fit"> Relaxed Fit</label>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Catálogo de productos -->
+    <section class="product-section">
+        <div class="tarjeta-producto" style="animation-delay: 0.1s">
+            <a href="product.html" style="text-decoration: none; color: inherit;">
+                <div class="product-image-container">
+                    <img class="product-image" src="../img/camisa-negra-regular-easy.webp" alt="Camisa Negra Regular Fit">
+                </div>
+                <div class="product-info">
+                    <p class="product-name">Camisa Negra Manga Larga Regular Fit Easy Iron</p>
+                    <p class="product-price">$79.00</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 0.2s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/camisa-negra-slim-easy.webp" alt="Camisa Negra Slim Fit">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Camisa Negra Manga Larga Slim Fit Easy Iron</p>
+                <p class="product-price">$85.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 0.3s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/camisa-celeste-slim-easy.webp" alt="Camisa Celeste">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Camisa Celeste Manga Larga Slim Fit Easy Iron</p>
+                <p class="product-price">$85.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 0.4s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/camisa-slim-algodon.webp" alt="Camisa Algodón">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Camisa Algodón Manga Larga Regular Fit</p>
+                <p class="product-price">$79.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 0.5s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/pantalon-denim-crudo-loose-fit.webp" alt="Pantalón Denim Crudo">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Pantalón Denim Crudo Loose Fit</p>
+                <p class="product-price">$95.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 0.6s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/pantalon-denim-gris-loose-fit.webp" alt="Pantalón Denim Gris">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Pantalón Denim Gris Loose Fit</p>
+                <p class="product-price">$95.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 0.7s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/pantalon-negro-mezcla-lino-relaxed-fit.webp" alt="Pantalón Lino">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Pantalón Mezcla Lino Relaxed Fit</p>
+                <p class="product-price">$99.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 0.8s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/pantalon-traje-regular-fit.webp" alt="Pantalón Traje">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Pantalón de Traje Regular Fit</p>
+                <p class="product-price">$125.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 0.9s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/loafers-negro.webp" alt="Loafers Negro">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Loafers Negro Clásico</p>
+                <p class="product-price">$139.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 1.0s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/zapatos-vestir.webp" alt="Zapatos Vestir">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Zapatos de Vestir</p>
+                <p class="product-price">$159.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 1.1s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/bolso-cruzado-denim-gris.webp" alt="Bolso Denim">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Bolso Cruzado Denim</p>
+                <p class="product-price">$69.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 1.2s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/cinturon-ante.webp" alt="Cinturón Ante">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Cinturón de Ante</p>
+                <p class="product-price">$49.00</p>
+            </div>
+        </div>
+
+        <div class="tarjeta-producto" style="animation-delay: 1.3s">
+            <div class="product-image-container">
+                <img class="product-image" src="../img/gorra-blanca-sarga.webp" alt="Gorra Blanca">
+            </div>
+            <div class="product-info">
+                <p class="product-name">Gorra Blanca Sarga</p>
+                <p class="product-price">$35.00</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SERVICIO AL CLIENTE</h3>
+                <ul>
+                    <li><a href="#">Contáctanos</a></li>
+                    <li><a href="#">Envío Internacional</a></li>
+                    <li><a href="#">Devoluciones Elegantes</a></li>
+                    <li><a href="#">Guía de Tallas Premium</a></li>
+                    <li><a href="#">Servicios VIP</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>LA MARCA</h3>
+                <ul>
+                    <li><a href="#">Nuestra Filosofía</a></li>
+                    <li><a href="#">Artesanía y Calidad</a></li>
+                    <li><a href="#">Colecciones Exclusivas</a></li>
+                    <li><a href="#">Colaboraciones</a></li>
+                    <li><a href="#">Eventos Privados</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>EXPERIENCIA</h3>
+                <ul>
+                    <li><a href="#">Personal Shopper</a></li>
+                    <li><a href="#">Membresía Exclusiva</a></li>
+                    <li><a href="#">Tarjeta de Regalo</a></li>
+                    <li><a href="#">Servicio de Alteraciones</a></li>
+                    <li><a href="#">Citas Privadas</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>CONECTA</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="newsletter">
+                    <h4>ÚNETE A NUESTRA COMUNIDAD</h4>
+                    <p>Acceso anticipado a nuevas colecciones</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Correo electrónico">
+                        <button type="button">SUSCRIBIRSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <p>&copy; 2025 Clothing Store. Todos los derechos reservados.</p>
+                <div class="legal-links">
+                    <a href="#">Política de Privacidad</a>
+                    <span>|</span>
+                    <a href="#">Términos y Condiciones</a>
+                    <span>|</span>
+                    <a href="#">Configuración de Cookies</a>
+                </div>
+                <p class="image-credits">Imágenes de producto cortesía de H&M. Sitio creado con fines educativos.</p>
+            </div>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-apple-pay"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

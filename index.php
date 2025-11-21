@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'config/conexion.php';
 
 // Obtener parámetros de filtro y búsqueda
@@ -38,13 +39,55 @@ if ($categoria) {
     $sql .= " AND categoria = '" . $conexion->real_escape_string($categoria) . "'";
 }
 
-$sql .= " ORDER BY id DESC";
+// Ordenar por categoría: Camisas, Pantalones, Calzado, Accesorios
+$sql .= " ORDER BY 
+    CASE categoria 
+        WHEN 'Camisas' THEN 1 
+        WHEN 'Pantalones' THEN 2 
+        WHEN 'Calzado' THEN 3 
+        WHEN 'Accesorios' THEN 4 
+        ELSE 5 
+    END,
+    id DESC";
 $resultado = $conexion->query($sql);
 
 // Obtener valores únicos para los filtros
 $colores = $conexion->query("SELECT DISTINCT color FROM productos WHERE color IS NOT NULL ORDER BY color");
 $cortes = $conexion->query("SELECT DISTINCT corte FROM productos WHERE corte IS NOT NULL ORDER BY corte");
-$tallas_disponibles = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+// Obtener todas las tallas únicas de todos los productos
+$tallas_query = $conexion->query("SELECT DISTINCT tallas FROM productos");
+$tallas_disponibles = [];
+while($row = $tallas_query->fetch_assoc()) {
+    $tallas_array = json_decode($row['tallas'], true);
+    if ($tallas_array) {
+        $tallas_disponibles = array_merge($tallas_disponibles, $tallas_array);
+    }
+}
+$tallas_disponibles = array_unique($tallas_disponibles);
+
+// Ordenar tallas: primero letras (XS, S, M, L, XL, XXL), luego números
+usort($tallas_disponibles, function($a, $b) {
+    // Tallas de letras en orden específico
+    $orden_letras = ['XS' => 1, 'S' => 2, 'M' => 3, 'L' => 4, 'XL' => 5, 'XXL' => 6, 'Única' => 999];
+    
+    // Si ambos son letras conocidas
+    if (isset($orden_letras[$a]) && isset($orden_letras[$b])) {
+        return $orden_letras[$a] - $orden_letras[$b];
+    }
+    
+    // Si solo uno es letra
+    if (isset($orden_letras[$a])) return -1;
+    if (isset($orden_letras[$b])) return 1;
+    
+    // Si ambos son números
+    if (is_numeric($a) && is_numeric($b)) {
+        return intval($a) - intval($b);
+    }
+    
+    // Comparación por defecto
+    return strcmp($a, $b);
+});
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -56,7 +99,7 @@ $tallas_disponibles = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
         <link
             href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap"
             rel="stylesheet">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="styles.css?v=<?php echo time(); ?>">
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <title>Clothing Store - Inicio</title>
@@ -72,59 +115,41 @@ $tallas_disponibles = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
                 </a>
             </div>
             <div class="button-container">
-                <div id="search" style="position: relative;">
-                    <i class="far fa-search" onclick="toggleSearch()"></i>
-                    <form method="GET" action="index.php" id="search-form" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 10px;">
-                        <input type="text" name="busqueda" placeholder="Buscar producto..." 
-                               value="<?php echo htmlspecialchars($busqueda); ?>"
-                               style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 200px;">
-                        <button type="submit" style="padding: 8px 12px; background-color: var(--color-primario); color: white; border: none; border-radius: 4px; cursor: pointer; margin-left: 5px;">
-                            Buscar
-                        </button>
+                <div id="search" class="search-container">
+                    <i class="far fa-search"></i>
+                    <form method="GET" action="index.php" id="search-form" class="search-form">
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <input type="text" name="busqueda" placeholder="Buscar producto..." 
+                                   value="<?php echo htmlspecialchars($busqueda); ?>"
+                                   style="padding: 10px 15px; border: 1px solid var(--color-acento); border-radius: 0; width: 250px; font-family: var(--fuente-texto); font-size: 14px; color: var(--color-primario); outline: none; box-sizing: border-box;">
+                            <button type="submit" style="padding: 10px 20px; background-color: var(--color-primario); color: white; border: none; border-radius: 0; cursor: pointer; font-family: var(--fuente-texto); font-size: 14px; font-weight: 600; letter-spacing: 1px; transition: background-color 0.3s; width: 100%; box-sizing: border-box;">
+                                BUSCAR
+                            </button>
+                        </div>
                     </form>
                 </div>
                 <div id="user-info">
-                    <i class="far fa-user"></i>
+                    <?php if (isset($_SESSION['usuario_id'])): ?>
+                        <div class="user-dropdown">
+                            <i class="far fa-user"></i>
+                            <div class="user-menu">
+                                <p class="user-name"><?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></p>
+                                <a href="logout.php">Cerrar Sesión</a>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <a href="login.php"><i class="far fa-user"></i></a>
+                    <?php endif; ?>
                 </div>
                 <div id="shopping-bag">
                     <i class="far fa-shopping-bag"></i>
                 </div>
             </div>
         </div>
-        <!-- Sidebar -->
-        <div id="sidebar" class="sidebar">
-            <div class="sidebar-header">
-                <h2>CATEGORÍAS</h2>
-                <i class="fas fa-times close-btn" onclick="toggleSidebar()"></i>
-            </div>
-            <ul class="sidebar-menu">
-                <li><a href="index.php?categoria=camisas">Camisas</a></li>
-                <li><a href="index.php?categoria=pantalones">Pantalones</a></li>
-                <li><a href="index.php?categoria=calzado">Calzado</a></li>
-                <li><a href="index.php?categoria=accesorios">Accesorios</a></li>
-            </ul>
-        </div>
-
-        <!-- Overlay -->
-        <div id="overlay" class="overlay" onclick="toggleSidebar()"></div>
-
-        <script>
-            function toggleSearch() {
-                const form = document.getElementById('search-form');
-                form.style.display = form.style.display === 'none' ? 'block' : 'none';
-            }
-
-            function toggleSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                const overlay = document.getElementById('overlay');
-                
-                sidebar.classList.toggle('active');
-                overlay.classList.toggle('active');
-            }
-
-            // Agregar evento al icono de barras
-            document.querySelector('.filter-bar').addEventListener('click', toggleSidebar);
-        </script>
+        
+        <?php include 'includes/sidebar.php'; ?>
+        <?php include 'includes/cart-sidebar.php'; ?>
+        
         <nav class="category-nav-bar">
             <form method="GET" action="index.php" id="filter-form">
                 <!-- Mantener búsqueda si existe -->
@@ -228,5 +253,89 @@ $tallas_disponibles = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
             $conexion->close();
             ?>
         </section>
+        
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SERVICIO AL CLIENTE</h3>
+                    <ul>
+                        <li><a href="#">Contáctanos</a></li>
+                        <li><a href="#">Envío Internacional</a></li>
+                        <li><a href="#">Devoluciones Elegantes</a></li>
+                        <li><a href="#">Guía de Tallas Premium</a></li>
+                        <li><a href="#">Servicios VIP</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>LA MARCA</h3>
+                    <ul>
+                        <li><a href="#">Nuestra Filosofía</a></li>
+                        <li><a href="#">Artesanía y Calidad</a></li>
+                        <li><a href="#">Colecciones Exclusivas</a></li>
+                        <li><a href="#">Colaboraciones</a></li>
+                        <li><a href="#">Eventos Privados</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>EXPERIENCIA</h3>
+                    <ul>
+                        <li><a href="#">Personal Shopper</a></li>
+                        <li><a href="#">Membresía Exclusiva</a></li>
+                        <li><a href="#">Tarjeta de Regalo</a></li>
+                        <li><a href="#">Servicio de Alteraciones</a></li>
+                        <li><a href="#">Citas Privadas</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>CONECTA</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                    <div class="newsletter">
+                        <h4>ÚNETE A NUESTRA COMUNIDAD</h4>
+                        <p>Acceso anticipado a nuevas colecciones</p>
+                        <form class="newsletter-form">
+                            <input type="email" placeholder="Correo electrónico" required>
+                            <button type="submit">SUSCRIBIRSE</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p>&copy; 2025 Clothing Store. Todos los derechos reservados.</p>
+                    <div class="legal-links">
+                        <a href="#">Política de Privacidad</a>
+                        <span>|</span>
+                        <a href="#">Términos y Condiciones</a>
+                        <span>|</span>
+                        <a href="#">Configuración de Cookies</a>
+                    </div>
+                    <p class="image-credits">Imágenes de producto cortesía de H&M. Sitio creado con fines educativos.</p>
+                </div>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                    <i class="fab fa-apple-pay"></i>
+                </div>
+            </div>
+            
+            <!-- Disclaimer oculto para propósitos educativos -->
+            <div style="display: none;" aria-hidden="true">
+                Las imágenes utilizadas en este sitio web son propiedad de H&M Hennes & Mauritz AB. 
+                Este proyecto es únicamente con fines educativos y no tiene ninguna afiliación comercial 
+                con H&M. No se pretende infringir ningún derecho de autor.
+            </div>
+        </footer>
     </body>
 </html>

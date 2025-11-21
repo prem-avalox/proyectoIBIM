@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Producto - Clothing Store</title>
+</head>
+<body class="general">
+    <div class="header">
+        <div class="filter-bar">
+            <i class="far fa-bars"></i>
+        </div>
+        <div class="logo">
+            <a href="index.html" style="text-decoration: none; color: inherit;">
+                <h1>CLOTHING STORE</h1>
+            </a>
+        </div>
+        <div class="button-container">
+            <div id="search" class="search-container">
+                <i class="far fa-search"></i>
+            </div>
+            <div id="user-info">
+                <a href="login.html"><i class="far fa-user"></i></a>
+            </div>
+            <div id="shopping-bag">
+                <i class="far fa-shopping-bag"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar de categorías -->
+    <aside id="sidebar" class="sidebar" style="margin-top: 70px;">
+        <div class="sidebar-header">
+            <button class="close-btn" onclick="toggleSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html#camisas">CAMISAS</a></li>
+            <li><a href="index.html#pantalones">PANTALONES</a></li>
+            <li><a href="index.html#calzado">CALZADO</a></li>
+            <li><a href="index.html#accesorios">ACCESORIOS</a></li>
+        </ul>
+    </aside>
+
+    <!-- Sidebar del carrito -->
+    <div id="cart-sidebar" class="cart-sidebar" style="position: fixed; right: -450px; top: 0; width: 450px; height: 100%; background: white; z-index: 1002; transition: right 0.3s ease; overflow-y: auto; box-shadow: -2px 0 10px rgba(0,0,0,0.1);">
+        <div style="padding: 30px; border-bottom: 1px solid #e0e0e0; display: flex; justify-content: space-between; align-items: center;">
+            <h2 style="font-family: 'Roboto Condensed', sans-serif; font-size: 18px; font-weight: 700; margin: 0;">BOLSA DE COMPRAS</h2>
+            <button class="close-btn" onclick="toggleCart()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #333;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div id="cart-items" style="padding: 20px; min-height: calc(100% - 250px);">
+            <p style="text-align: center; color: #999; padding: 40px 20px;">Tu bolsa está vacía</p>
+        </div>
+        
+        <div class="cart-footer" style="padding: 20px 30px; border-top: 1px solid #e0e0e0; background: #f9f9f9; position: absolute; bottom: 0; width: 100%; box-sizing: border-box;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-family: 'Roboto Condensed', sans-serif;">
+                <span style="font-size: 16px; font-weight: 700;">SUBTOTAL:</span>
+                <span id="cart-total-amount" style="font-size: 16px; font-weight: 700; color: #124a7e;">$0.00</span>
+            </div>
+            <button onclick="proceedToCheckout()" style="width: 100%; padding: 15px; background: #124a7e; color: white; border: none; cursor: pointer; font-family: 'Roboto Condensed', sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; transition: background 0.3s;">FINALIZAR COMPRA</button>
+            <button onclick="clearCart()" style="width: 100%; padding: 12px; background: white; color: #124a7e; border: 1px solid #124a7e; cursor: pointer; font-family: 'Roboto Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 1px; transition: all 0.3s;">VACIAR BOLSA</button>
+            <p style="text-align: center; font-size: 11px; color: #666; margin-top: 15px;">Envío gratis en pedidos superiores a $50</p>
+        </div>
+    </div>
+
+    <!-- Overlays -->
+    <div id="overlay" class="overlay"></div>
+    <div id="cart-overlay" class="overlay"></div>
+
+    <a href="index.html" class="back-button">
+        <i class="fas fa-chevron-left"></i>
+        <span>Volver al catálogo</span>
+    </a>
+
+    <div class="product-detail-section">
+        <div class="product-review-section">
+            <img src="../img/camisa-negra-regular-easy.webp" alt="Camisa Negra Regular Fit Easy Iron">
+        </div>
+        <div class="detail-section">
+            <div class="detalle-producto">
+                <h2>Camisa Negra Manga Larga Regular Fit Easy Iron</h2>
+                <p class="precio-detalle-producto">$79.00</p>
+            </div>
+            <div class="seleccion-talla-producto">
+                <p>Talla</p>
+                <ul class="cajas-talla-lista">
+                    <li><div class="talla-item">XS</div></li>
+                    <li><div class="talla-item talla-seleccionada">S</div></li>
+                    <li><div class="talla-item">M</div></li>
+                    <li><div class="talla-item">L</div></li>
+                    <li><div class="talla-item">XL</div></li>
+                </ul>
+                <div class="guia-tallas">
+                    <i class="far fa-ruler"></i> Guía De Tallas
+                </div>
+            </div>
+            <div class="agregar-bolsa" onclick="addToCartFromProduct()">Agregar a la bolsa</div>
+            <div class="descripcion">
+                Esta es nuestra camisa en negro con corte regular fit. Elaborada en Ecuador con tejido de algodón que combina comodidad y practicidad. El acabado Easy Iron minimiza el mantenimiento. Presenta una silueta relajada perfecta para el día a día. Construcción clásica con costuras reforzadas. Este producto es apto para lavadora.
+            </div>
+            <div class="cajas-informacion">
+                <h3>ENVÍO</h3>
+                <p>Recibe tu pedido en 3-5 días hábiles. Envío gratis en pedidos superiores a $50.</p>
+            </div>
+            <div class="cajas-informacion">
+                <h3>PAGO</h3>
+                <p>Tu información de pago se procesa de forma segura. No almacenamos los detalles de la tarjeta de crédito ni tenemos acceso a la información de tu tarjeta de crédito.</p>
+                <div class="payment-icons">
+                    <i class="fab fa-cc-visa"></i>
+                    <i class="fab fa-cc-mastercard"></i>
+                    <i class="fab fa-cc-amex"></i>
+                    <i class="fab fa-cc-paypal"></i>
+                    <i class="fab fa-cc-apple-pay"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SERVICIO AL CLIENTE</h3>
+                <ul>
+                    <li><a href="#">Contáctanos</a></li>
+                    <li><a href="#">Envío Internacional</a></li>
+                    <li><a href="#">Devoluciones Elegantes</a></li>
+                    <li><a href="#">Guía de Tallas Premium</a></li>
+                    <li><a href="#">Servicios VIP</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>LA MARCA</h3>
+                <ul>
+                    <li><a href="#">Nuestra Filosofía</a></li>
+                    <li><a href="#">Artesanía y Calidad</a></li>
+                    <li><a href="#">Colecciones Exclusivas</a></li>
+                    <li><a href="#">Colaboraciones</a></li>
+                    <li><a href="#">Eventos Privados</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>EXPERIENCIA</h3>
+                <ul>
+                    <li><a href="#">Personal Shopper</a></li>
+                    <li><a href="#">Membresía Exclusiva</a></li>
+                    <li><a href="#">Tarjeta de Regalo</a></li>
+                    <li><a href="#">Servicio de Alteraciones</a></li>
+                    <li><a href="#">Citas Privadas</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>CONECTA</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="newsletter">
+                    <h4>ÚNETE A NUESTRA COMUNIDAD</h4>
+                    <p>Acceso anticipado a nuevas colecciones</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Correo electrónico">
+                        <button type="button">SUSCRIBIRSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <p>&copy; 2025 Clothing Store. Todos los derechos reservados.</p>
+                <div class="legal-links">
+                    <a href="#">Política de Privacidad</a>
+                    <span>|</span>
+                    <a href="#">Términos y Condiciones</a>
+                    <span>|</span>
+                    <a href="#">Configuración de Cookies</a>
+                </div>
+                <p class="image-credits">Imágenes de producto cortesía de H&M. Sitio creado con fines educativos.</p>
+            </div>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-apple-pay"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
