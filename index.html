@@ -1,123 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap"
-            rel="stylesheet">
-        <link rel="stylesheet" href="styles.css">
-        <link rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <title>Document</title>
-    </head>
-    <body class="general">
-        <div class="header">
-            <div class="filter-bar">
-                <i class="far fa-bars"></i>
-            </div>
-            <div class="logo">
-                <h1>CLOTHING STORE</h1>
-            </div>
-            <div class="button-container">
-                <div id="search">
-                    <i class="far fa-search"></i>
-                </div>
-                <div id="user-info">
-                    <i class="far fa-user"></i>
-                </div>
-                <div id="shopping-bag">
-                    <i class="far fa-shopping-bag"></i>
-                </div>
-            </div>
-
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@100;200;300;400;500;600;700;800;900&family=Roboto+Condensed:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Clothing Store - Versión Estática Demo</title>
+</head>
+<body class="general">
+    <div class="header">
+        <div class="filter-bar">
         </div>
-        <nav class="nav-bar">
-            <ul class="nav-bar-list">
-                <li>
-                    CAMISAS
-                </li>
-                <li>
-                    PANTALONES
-                </li>
-                <li>
-                    CALZADO
-                </li>
-            </ul>
-        </nav>
-        <nav class="category-nav-bar">
-            <ul class="cajas-filtro-lista">
-                <li>
-                    <div>
-                        PRECIO <i class="fas fa-chevron-down"></i>
+        <div class="logo">
+            <h1>CLOTHING STORE</h1>
+        </div>
+        
+        <!-- Se cumple el requisito 3 -->
+        <div class="button-container"> 
+            <div id="search" class="search-container">
+                <div class="search-form">
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <input type="text" placeholder="Buscar producto..." 
+                               style="padding: 10px 15px; border: 1px solid var(--color-acento); border-radius: 0; width: 250px; font-family: var(--fuente-texto); font-size: 14px; color: var(--color-primario); outline: none; box-sizing: border-box;">
+                        <button type="button" style="padding: 10px 20px; background-color: var(--color-primario); color: white; border: none; border-radius: 0; cursor: pointer; font-family: var(--fuente-texto); font-size: 14px; font-weight: 600; letter-spacing: 1px; transition: background-color 0.3s; width: 100%; box-sizing: border-box;">
+                            BUSCAR
+                        </button>
                     </div>
-                </li>
-                <li>
-                    <div>
-                        TAMAÑO <i class="fas fa-chevron-down"></i>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        CORTE <i class="fas fa-chevron-down"></i>
-                    </div>
-                </li>
-                <li>
-                    <div>
-                        ORDENAR <i class="fas fa-chevron-down"></i>
-                    </div>
-                </li>
-            </ul>
-        </nav>
-        <section class="product-section">
-            <div class="tarjeta-producto">
-                <div class="imagen-producto">
-                    <img src="/img/camisa-negra-regular-easy.webp"
-                        alt="Camisa Negra Manga Larga Regular Fit Easy Iron">
-                </div>
-                <div class="info-producto">
-                    <h3 class="nombre-producto">Camisa Negra Manga Larga Regular
-                        Fit Easy Iron</h3>
-                    <p class="precio-producto">$29.99</p>
                 </div>
             </div>
-            <div class="tarjeta-producto">
-                <div class="imagen-producto">
-                    <img src="/img/camisa-negra-slim-easy.webp"
-                        alt="Camisa Negra Manga Larga Slim Fit Easy Iron">
-                </div>
-                <div class="info-producto">
-                    <h3 class="nombre-producto">Camisa Negra Manga Larga Slim
-                        Fit Easy Iron</h3>
-                    <p class="precio-producto">$19.99</p>
-                </div>
+            <div id="user-info" style="margin-left: 120px;">
+                <a href="login.html"><i class="far fa-user"></i></a>
             </div>
-            <div class="tarjeta-producto">
-                <div class="imagen-producto">
-                    <img src="/img/camisa-celeste-slim-easy.webp"
-                        alt="Camisa Celeste Manga Larga Slim Fit Easy Iron">
+        </div>
+    </div>
+
+    <!-- Se cumple el requisito 4 -->
+    <!-- Barra de categorías y filtros -->
+    <nav class="category-nav-bar">
+        <ul class="cajas-filtro-lista">
+            <li>
+                <div onclick="toggleDropdown('talla-dropdown')">
+                    TAMAÑO <i class="fas fa-chevron-down"></i>
                 </div>
-                <div class="info-producto">
-                    <h3 class="nombre-producto">Camisa Celeste Manga Larga Slim
-                        Fit Easy Iron</h3>
-                    <p class="precio-producto">$19.99</p>
+                <div id="talla-dropdown" class="filter-dropdown" style="display: none;">
+                    <label><input type="radio" name="talla" value="" checked> Todas</label>
+                    <label><input type="radio" name="talla" value="XS"> XS</label>
+                    <label><input type="radio" name="talla" value="S"> S</label>
+                    <label><input type="radio" name="talla" value="M"> M</label>
+                    <label><input type="radio" name="talla" value="L"> L</label>
+                    <label><input type="radio" name="talla" value="XL"> XL</label>
                 </div>
-            </div>
-            <div class="tarjeta-producto">
-                <div class="imagen-producto">
-                    <img src="img/camisa-slim-algodon.webp"
-                        alt="Camisa Algodón Manga Larga Regular Fit">
+            </li>
+            <li>
+                <div onclick="toggleDropdown('color-dropdown')">
+                    COLOR <i class="fas fa-chevron-down"></i>
                 </div>
-                <div class="info-producto">
-                    
-                        <h3 class="nombre-producto">Camisa Algodón Manga Larga
-                            Regular Fit</h3>
-                        <p class="precio-producto">$34.99</p>
+                <div id="color-dropdown" class="filter-dropdown" style="display: none;">
+                    <label><input type="radio" name="color" value="" checked> Todos</label>
+                    <label><input type="radio" name="color" value="Negro"> Negro</label>
+                    <label><input type="radio" name="color" value="Celeste"> Celeste</label>
+                    <label><input type="radio" name="color" value="Blanco"> Blanco</label>
+                    <label><input type="radio" name="color" value="Gris"> Gris</label>
+                    <label><input type="radio" name="color" value="Crudo"> Crudo</label>
+                    <label><input type="radio" name="color" value="Marrón"> Marrón</label>
                 </div>
+            </li>
+            <li>
+                <div onclick="toggleDropdown('corte-dropdown')">
+                    CORTE <i class="fas fa-chevron-down"></i>
+                </div>
+                <div id="corte-dropdown" class="filter-dropdown" style="display: none;">
+                    <label><input type="radio" name="corte" value="" checked> Todos</label>
+                    <label><input type="radio" name="corte" value="Regular Fit"> Regular Fit</label>
+                    <label><input type="radio" name="corte" value="Slim Fit"> Slim Fit</label>
+                    <label><input type="radio" name="corte" value="Loose Fit"> Loose Fit</label>
+                    <label><input type="radio" name="corte" value="Relaxed Fit"> Relaxed Fit</label>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Catálogo de productos -->
+    <section class="product-section">
+        <div class="product-grid" id="product-grid">
+            <!-- Los productos se cargarán aquí dinámicamente -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>SERVICIO AL CLIENTE</h3>
+                <ul>
+                    <li><a href="#">Contáctanos</a></li>
+                    <li><a href="#">Envío Internacional</a></li>
+                    <li><a href="#">Devoluciones Elegantes</a></li>
+                    <li><a href="#">Guía de Tallas Premium</a></li>
+                    <li><a href="#">Servicios VIP</a></li>
+                </ul>
             </div>
 
-        </section>
-    </body>
+            <div class="footer-section">
+                <h3>LA MARCA</h3>
+                <ul>
+                    <li><a href="#">Nuestra Filosofía</a></li>
+                    <li><a href="#">Artesanía y Calidad</a></li>
+                    <li><a href="#">Colecciones Exclusivas</a></li>
+                    <li><a href="#">Colaboraciones</a></li>
+                    <li><a href="#">Eventos Privados</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>EXPERIENCIA</h3>
+                <ul>
+                    <li><a href="#">Personal Shopper</a></li>
+                    <li><a href="#">Membresía Exclusiva</a></li>
+                    <li><a href="#">Tarjeta de Regalo</a></li>
+                    <li><a href="#">Servicio de Alteraciones</a></li>
+                    <li><a href="#">Citas Privadas</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>CONECTA</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+                <div class="newsletter">
+                    <h4>ÚNETE A NUESTRA COMUNIDAD</h4>
+                    <p>Acceso anticipado a nuevas colecciones</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Correo electrónico">
+                        <button type="button">SUSCRIBIRSE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <p>&copy; 2025 Clothing Store. Todos los derechos reservados.</p>
+                <div class="legal-links">
+                    <a href="#">Política de Privacidad</a>
+                    <span>|</span>
+                    <a href="#">Términos y Condiciones</a>
+                    <span>|</span>
+                    <a href="#">Configuración de Cookies</a>
+                </div>
+                <p class="image-credits">Imágenes de producto cortesía de H&M. Sitio creado con fines educativos.</p>
+            </div>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-amex"></i>
+                <i class="fab fa-cc-paypal"></i>
+                <i class="fab fa-apple-pay"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
 </html>
